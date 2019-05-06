@@ -1,0 +1,12 @@
+[package]
+name = "rust-proc-macro-panic-inside-panic-expample"
+version = "0.1.0"
+authors = ["Roman Golyshev <anstreth@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+proc-macro2 = "0.4.29"
+dylib = "0.0.3"
+goblin = "0.0.22"
+syn = "0.15.33"
+tempfile = "3"
