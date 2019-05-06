@@ -5,7 +5,7 @@ use proc_macro::bridge::{server, TokenTree};
 use std::collections::Bound;
 use std::collections::HashMap;
 use std::hash::{Hash, Hasher};
-use std::iter::FromIterator;
+
 use std::vec::IntoIter;
 
 use proc_macro::{Delimiter, Level, LineColumn, Spacing};
@@ -50,7 +50,7 @@ pub struct MyPunct(u32);
 struct MyPunctData(proc_macro2::Punct);
 
 impl Hash for MyPunctData {
-    fn hash<H: Hasher>(&self, hasher: &mut H) {
+    fn hash<H: Hasher>(&self, _hasher: &mut H) {
         unimplemented!()
     }
 }
@@ -58,7 +58,7 @@ impl Hash for MyPunctData {
 impl Eq for MyPunctData {}
 
 impl PartialEq for MyPunctData {
-    fn eq(&self, other: &Self) -> bool {
+    fn eq(&self, _other: &Self) -> bool {
         unimplemented!()
     }
 }
@@ -70,7 +70,7 @@ pub struct MyIdent(u32);
 struct MyIdentData(proc_macro2::Ident);
 
 impl Hash for MyIdentData {
-    fn hash<H: Hasher>(&self, hasher: &mut H) {
+    fn hash<H: Hasher>(&self, _hasher: &mut H) {
         unimplemented!()
     }
 }
@@ -97,7 +97,7 @@ pub struct MySpan(u32);
 struct MySpanData(proc_macro2::Span);
 
 impl Hash for MySpanData {
-    fn hash<H: Hasher>(&self, hasher: &mut H) {
+    fn hash<H: Hasher>(&self, _hasher: &mut H) {
         unimplemented!()
     }
 }
@@ -105,7 +105,7 @@ impl Hash for MySpanData {
 impl Eq for MySpanData {}
 
 impl PartialEq for MySpanData {
-    fn eq(&self, other: &Self) -> bool {
+    fn eq(&self, _other: &Self) -> bool {
         unimplemented!()
     }
 }
@@ -222,23 +222,23 @@ impl server::TokenStream for Rustc {
         unimplemented!()
     }
 
-    fn is_empty(&mut self, stream: &Self::TokenStream) -> bool {
+    fn is_empty(&mut self, _stream: &Self::TokenStream) -> bool {
         unimplemented!()
     }
-    fn from_str(&mut self, src: &str) -> Self::TokenStream {
+    fn from_str(&mut self, _src: &str) -> Self::TokenStream {
         unimplemented!()
     }
-    fn to_string(&mut self, stream: &Self::TokenStream) -> String {
+    fn to_string(&mut self, _stream: &Self::TokenStream) -> String {
         unimplemented!()
     }
     fn from_token_tree(
         &mut self,
-        tree: TokenTree<Self::Group, Self::Punct, Self::Ident, Self::Literal>,
+        _tree: TokenTree<Self::Group, Self::Punct, Self::Ident, Self::Literal>,
     ) -> Self::TokenStream {
         unimplemented!()
     }
 
-    fn into_iter(&mut self, stream: Self::TokenStream) -> Self::TokenStreamIter {
+    fn into_iter(&mut self, _stream: Self::TokenStream) -> Self::TokenStreamIter {
         unimplemented!()
     }
 }
@@ -247,10 +247,10 @@ impl server::TokenStreamBuilder for Rustc {
     fn new(&mut self) -> Self::TokenStreamBuilder {
         unimplemented!()
     }
-    fn push(&mut self, builder: &mut Self::TokenStreamBuilder, stream: Self::TokenStream) {
+    fn push(&mut self, _builder: &mut Self::TokenStreamBuilder, _stream: Self::TokenStream) {
         unimplemented!()
     }
-    fn build(&mut self, builder: Self::TokenStreamBuilder) -> Self::TokenStream {
+    fn build(&mut self, _builder: Self::TokenStreamBuilder) -> Self::TokenStream {
         unimplemented!()
     }
 }
@@ -258,113 +258,113 @@ impl server::TokenStreamBuilder for Rustc {
 impl server::TokenStreamIter for Rustc {
     fn next(
         &mut self,
-        iter: &mut Self::TokenStreamIter,
+        _iter: &mut Self::TokenStreamIter,
     ) -> Option<TokenTree<Self::Group, Self::Punct, Self::Ident, Self::Literal>> {
         unimplemented!()
     }
 }
 
 impl server::Group for Rustc {
-    fn new(&mut self, delimiter: Delimiter, stream: Self::TokenStream) -> Self::Group {
+    fn new(&mut self, _delimiter: Delimiter, _stream: Self::TokenStream) -> Self::Group {
         unimplemented!()
     }
-    fn delimiter(&mut self, group: &Self::Group) -> Delimiter {
+    fn delimiter(&mut self, _group: &Self::Group) -> Delimiter {
         unimplemented!()
     }
-    fn stream(&mut self, group: &Self::Group) -> Self::TokenStream {
+    fn stream(&mut self, _group: &Self::Group) -> Self::TokenStream {
         unimplemented!()
     }
-    fn span(&mut self, group: &Self::Group) -> Self::Span {
-        unimplemented!()
-    }
-
-    fn set_span(&mut self, group: &mut Self::Group, span: Self::Span) {
+    fn span(&mut self, _group: &Self::Group) -> Self::Span {
         unimplemented!()
     }
 
-    fn span_open(&mut self, group: &Self::Group) -> Self::Span {
+    fn set_span(&mut self, _group: &mut Self::Group, _span: Self::Span) {
         unimplemented!()
     }
 
-    fn span_close(&mut self, group: &Self::Group) -> Self::Span {
+    fn span_open(&mut self, _group: &Self::Group) -> Self::Span {
+        unimplemented!()
+    }
+
+    fn span_close(&mut self, _group: &Self::Group) -> Self::Span {
         unimplemented!()
     }
 }
 
 impl server::Punct for Rustc {
-    fn new(&mut self, ch: char, spacing: Spacing) -> Self::Punct {
+    fn new(&mut self, _ch: char, _spacing: Spacing) -> Self::Punct {
         unimplemented!()
     }
 
-    fn as_char(&mut self, punct: Self::Punct) -> char {
+    fn as_char(&mut self, _punct: Self::Punct) -> char {
         unimplemented!()
     }
-    fn spacing(&mut self, punct: Self::Punct) -> Spacing {
+    fn spacing(&mut self, _punct: Self::Punct) -> Spacing {
         unimplemented!()
     }
-    fn span(&mut self, punct: Self::Punct) -> Self::Span {
+    fn span(&mut self, _punct: Self::Punct) -> Self::Span {
         unimplemented!()
     }
-    fn with_span(&mut self, punct: Self::Punct, span: Self::Span) -> Self::Punct {
+    fn with_span(&mut self, _punct: Self::Punct, _span: Self::Span) -> Self::Punct {
         unimplemented!()
     }
 }
 
 impl server::Ident for Rustc {
-    fn new(&mut self, string: &str, span: Self::Span, _is_raw: bool) -> Self::Ident {
+    fn new(&mut self, _string: &str, _span: Self::Span, _is_raw: bool) -> Self::Ident {
         unimplemented!()
     }
 
-    fn span(&mut self, ident: Self::Ident) -> Self::Span {
+    fn span(&mut self, _ident: Self::Ident) -> Self::Span {
         unimplemented!()
     }
-    fn with_span(&mut self, ident: Self::Ident, span: Self::Span) -> Self::Ident {
+    fn with_span(&mut self, _ident: Self::Ident, _span: Self::Span) -> Self::Ident {
         unimplemented!()
     }
 }
 
 impl server::Literal for Rustc {
-    fn debug(&mut self, literal: &Self::Literal) -> String {
+    fn debug(&mut self, _literal: &Self::Literal) -> String {
         unimplemented!()
     }
 
-    fn integer(&mut self, n: &str) -> Self::Literal {
+    fn integer(&mut self, _n: &str) -> Self::Literal {
         unimplemented!()
     }
 
-    fn typed_integer(&mut self, n: &str, kind: &str) -> Self::Literal {
+    fn typed_integer(&mut self, _n: &str, _kind: &str) -> Self::Literal {
         unimplemented!()
     }
 
-    fn float(&mut self, n: &str) -> Self::Literal {
+    fn float(&mut self, _n: &str) -> Self::Literal {
         unimplemented!()
     }
 
-    fn f32(&mut self, n: &str) -> Self::Literal {
+    fn f32(&mut self, _n: &str) -> Self::Literal {
         unimplemented!()
     }
 
-    fn f64(&mut self, n: &str) -> Self::Literal {
+    fn f64(&mut self, _n: &str) -> Self::Literal {
         unimplemented!()
     }
 
-    fn string(&mut self, string: &str) -> Self::Literal {
+    fn string(&mut self, _string: &str) -> Self::Literal {
         unimplemented!()
     }
 
-    fn character(&mut self, ch: char) -> Self::Literal {
+    fn character(&mut self, _ch: char) -> Self::Literal {
         unimplemented!()
     }
 
-    fn byte_string(&mut self, bytes: &[u8]) -> Self::Literal {
+    fn byte_string(&mut self, _bytes: &[u8]) -> Self::Literal {
         unimplemented!()
     }
 
-    fn span(&mut self, literal: &Self::Literal) -> Self::Span {
+    fn span(&mut self, _literal: &Self::Literal) -> Self::Span {
         unimplemented!()
     }
 
-    fn set_span(&mut self, literal: &mut Self::Literal, span: Self::Span) {
+    fn set_span(&mut self, _literal: &mut Self::Literal, _span: Self::Span) {
         unimplemented!()
     }
 
@@ -379,19 +379,19 @@ impl server::Literal for Rustc {
 }
 
 impl server::SourceFile for Rustc {
-    fn eq(&mut self, file1: &Self::SourceFile, file2: &Self::SourceFile) -> bool {
+    fn eq(&mut self, _file1: &Self::SourceFile, _file2: &Self::SourceFile) -> bool {
         unimplemented!()
     }
-    fn path(&mut self, file: &Self::SourceFile) -> String {
+    fn path(&mut self, _file: &Self::SourceFile) -> String {
         unimplemented!()
     }
-    fn is_real(&mut self, file: &Self::SourceFile) -> bool {
+    fn is_real(&mut self, _file: &Self::SourceFile) -> bool {
         unimplemented!()
     }
 }
 
 impl server::Diagnostic for Rustc {
-    fn new(&mut self, level: Level, msg: &str, spans: Self::MultiSpan) -> Self::Diagnostic {
+    fn new(&mut self, _level: Level, _msg: &str, _spans: Self::MultiSpan) -> Self::Diagnostic {
         unimplemented!()
     }
 
@@ -405,13 +405,13 @@ impl server::Diagnostic for Rustc {
         unimplemented!()
     }
 
-    fn emit(&mut self, diag: Self::Diagnostic) {
+    fn emit(&mut self, _diag: Self::Diagnostic) {
         unimplemented!()
     }
 }
 
 impl server::Span for Rustc {
-    fn debug(&mut self, span: Self::Span) -> String {
+    fn debug(&mut self, _span: Self::Span) -> String {
         unimplemented!()
     }
 
@@ -423,7 +423,7 @@ impl server::Span for Rustc {
         unimplemented!()
     }
 
-    fn source_file(&mut self, span: Self::Span) -> Self::SourceFile {
+    fn source_file(&mut self, _span: Self::Span) -> Self::SourceFile {
         unimplemented!()
     }
 
@@ -434,19 +434,19 @@ impl server::Span for Rustc {
     fn parent(&mut self, _span: Self::Span) -> Option<Self::Span> {
         unimplemented!()
     }
-    fn source(&mut self, span: Self::Span) -> Self::Span {
+    fn source(&mut self, _span: Self::Span) -> Self::Span {
         unimplemented!()
     }
-    fn start(&mut self, span: Self::Span) -> LineColumn {
+    fn start(&mut self, _span: Self::Span) -> LineColumn {
         unimplemented!()
     }
-    fn end(&mut self, span: Self::Span) -> LineColumn {
+    fn end(&mut self, _span: Self::Span) -> LineColumn {
         unimplemented!()
     }
-    fn join(&mut self, first: Self::Span, second: Self::Span) -> Option<Self::Span> {
+    fn join(&mut self, _first: Self::Span, _second: Self::Span) -> Option<Self::Span> {
         unimplemented!()
     }
-    fn resolved_at(&mut self, span: Self::Span, at: Self::Span) -> Self::Span {
+    fn resolved_at(&mut self, _span: Self::Span, _at: Self::Span) -> Self::Span {
         unimplemented!()
     }
 }
