@@ -123,11 +123,29 @@ fn compile_proc_macro(dir: &PathBuf) -> io::Result<PathBuf> {
     }
 }
 
+fn find_test_proc_macro() -> io::Result<PathBuf> {
+    let mut test_exe = std::env::current_exe()?;
+    test_exe.pop();
+
+    for entry in fs::read_dir(&test_exe)? {
+        let entry = entry?;
+        let name = entry.file_name().to_str().unwrap().to_string();
+        if entry.path().is_file()
+            && name.starts_with("libtest_proc_macro")
+            && name.ends_with(".so") {
+            return Ok(entry.path());
+        }
+    }
+
+    Err(io::Error::from(ErrorKind::NotFound))
+}
+
 #[test]
 fn test_getset_expansion() -> io::Result<()> {
-    let tmp_dir = TempDir::new()?;
-    setup_temp_proc_macro_project(&tmp_dir.path().to_path_buf())?;
-    let proc_macro_lib = canonicalize(compile_proc_macro(&tmp_dir.path().to_path_buf())?)?;
+//    let tmp_dir = TempDir::new()?;
+//    setup_temp_proc_macro_project(&tmp_dir.path().to_path_buf())?;
+//    let proc_macro_lib = canonicalize(compile_proc_macro(&tmp_dir.path().to_path_buf())?)?;
+    let proc_macro_lib = find_test_proc_macro()?;
 
     let symbol_name = find_registrar_symbol(&proc_macro_lib).expect(
         &format!("Cannot find registrar symbol in file {:?}", &proc_macro_lib)
