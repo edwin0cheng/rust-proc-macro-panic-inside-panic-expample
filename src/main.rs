@@ -2,24 +2,24 @@
 #![feature(proc_macro_span)]
 #![feature(proc_macro_diagnostic)]
 
-extern crate proc_macro;
 extern crate goblin;
+extern crate proc_macro;
 extern crate syn;
 extern crate tempfile;
 
-use proc_macro::bridge::server::SameThread;
-use std::path::PathBuf;
 use goblin::Object;
-use std::fs::{File, create_dir, canonicalize};
-use std::io::{Read, Error, ErrorKind};
-use std::{io, fs};
 use proc_macro::bridge::client::ProcMacro;
-use std::process::Command;
+use proc_macro::bridge::server::SameThread;
+use std::fs::{canonicalize, create_dir, File};
 use std::io::Write;
+use std::io::{Error, ErrorKind, Read};
+use std::path::PathBuf;
+use std::process::Command;
+use std::{fs, io};
 use tempfile::TempDir;
 
-mod rustc_server;
 mod dynamic_lib;
+mod rustc_server;
 
 use dynamic_lib::DynamicLibrary;
 
@@ -46,7 +46,7 @@ fn get_symbols_from_lib(file: &PathBuf) -> Option<Vec<String>> {
             Some(names)
         }
 
-        _ => None
+        _ => None,
     };
 }
 
@@ -131,9 +131,8 @@ fn find_test_proc_macro() -> io::Result<PathBuf> {
     for entry in fs::read_dir(&test_exe)? {
         let entry = entry?;
         let name = entry.file_name().to_str().unwrap().to_string();
-        if entry.path().is_file()
-            && name.starts_with("libtest_proc_macro")
-            && name.ends_with(".so") {
+        if entry.path().is_file() && name.starts_with("libtest_proc_macro") && name.ends_with(".so")
+        {
             return Ok(entry.path());
         }
     }
@@ -143,14 +142,15 @@ fn find_test_proc_macro() -> io::Result<PathBuf> {
 
 #[test]
 fn test_getset_expansion() -> io::Result<()> {
-//    let tmp_dir = TempDir::new()?;
-//    setup_temp_proc_macro_project(&tmp_dir.path().to_path_buf())?;
-//    let proc_macro_lib = canonicalize(compile_proc_macro(&tmp_dir.path().to_path_buf())?)?;
+    //    let tmp_dir = TempDir::new()?;
+    //    setup_temp_proc_macro_project(&tmp_dir.path().to_path_buf())?;
+    //    let proc_macro_lib = canonicalize(compile_proc_macro(&tmp_dir.path().to_path_buf())?)?;
     let proc_macro_lib = find_test_proc_macro()?;
 
-    let symbol_name = find_registrar_symbol(&proc_macro_lib).expect(
-        &format!("Cannot find registrar symbol in file {:?}", &proc_macro_lib)
-    );
+    let symbol_name = find_registrar_symbol(&proc_macro_lib).expect(&format!(
+        "Cannot find registrar symbol in file {:?}",
+        &proc_macro_lib
+    ));
 
     let lib = DynamicLibrary::open(Some(&proc_macro_lib)).expect("Cannot open dynamic library!");
 
@@ -168,10 +168,13 @@ fn test_getset_expansion() -> io::Result<()> {
                     parse_string("struct S{}").expect("Cannot parse code"),
                 );
 
-                assert!(result.is_err(), "rustc_server should panic with unimplemented")
+                assert!(
+                    result.is_err(),
+                    "rustc_server should panic with unimplemented"
+                )
             }
 
-            _ => { panic!("Not expected proc macro!") }
+            _ => panic!("Not expected proc macro!"),
         }
     }
 
