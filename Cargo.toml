@@ -9,5 +9,6 @@ proc-macro2 = "0.4.29"
 dylib = "0.0.3"
 goblin = "0.0.22"
 syn = "0.15.33"
+libc = "0.2.57"
 tempfile = "3"
 test_proc_macro = { path = "./test_proc_macro"}

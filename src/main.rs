@@ -4,7 +4,6 @@
 
 extern crate proc_macro;
 extern crate goblin;
-extern crate dylib;
 extern crate syn;
 extern crate tempfile;
 
@@ -14,13 +13,15 @@ use goblin::Object;
 use std::fs::{File, create_dir, canonicalize};
 use std::io::{Read, Error, ErrorKind};
 use std::{io, fs};
-use dylib::DynamicLibrary;
 use proc_macro::bridge::client::ProcMacro;
 use std::process::Command;
 use std::io::Write;
 use tempfile::TempDir;
 
 mod rustc_server;
+mod dynamic_lib;
+
+use dynamic_lib::DynamicLibrary;
 
 static NEW_REGISTRAR_SYMBOL: &str = "__rustc_proc_macro_decls_";
 const EXEC_STRATEGY: SameThread = SameThread;
